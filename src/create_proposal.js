@@ -4,6 +4,12 @@ import { AeSdk, MemoryAccount, Node, CompilerHttp, TransactionError, BaseError, 
 export async function create_proposal(privatekey,description,date) {
 
 const node = new Node('https://testnet.aeternity.io') // ideally host your own node
+try  {
+    const test = new MemoryAccount(privatekey)
+} catch (err) {
+    return "invalid private_key"
+}
+
 const account = new MemoryAccount(privatekey)
 
 const aeSdk = new AeSdk({

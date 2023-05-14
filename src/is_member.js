@@ -3,6 +3,12 @@ import { AeSdk, MemoryAccount, Node, CompilerHttp } from '@aeternity/aepp-sdk'
 export async function is_member(private_key) {
 
 const node = new Node('https://testnet.aeternity.io') // ideally host your own node
+try  {
+  const test = new MemoryAccount(private_key)
+} catch (err) {
+  return false
+}
+
 const account = new MemoryAccount(private_key)
 
 const aeSdk = new AeSdk({
@@ -18,9 +24,9 @@ const contract = await aeSdk.initializeContract({ aci, address })
 try {
   const tx = await contract.isMember()
   return tx.decodedResult 
-  console.log(tx.decodedResult)
+  console.log('result' + tx.decodedResult)
 } catch (err) {
-  return "error"
+  return false
 }
 
 

@@ -35,6 +35,7 @@ client.on('interactionCreate', (interaction) => {
         console.log(`hello world`);
         if (interaction.commandName === 'checklevel') {
             async function main2() {
+                await interaction.deferReply({ ephemeral: true });
                 // console.log(interaction.user.id);
                 const privateKey = interaction.options.data[0].value;
                 console.log(interaction.options.data[0].value);
@@ -59,7 +60,7 @@ client.on('interactionCreate', (interaction) => {
                 rank.build()
                 .then(data => {
                     const attachment = new AttachmentBuilder(data);
-                    interaction.reply({files:[attachment]});
+                    interaction.editReply({files:[attachment]});
                 });
             }
 
@@ -87,6 +88,7 @@ client.on('interactionCreate', (interaction) => {
                 await interaction.deferReply({ ephemeral: true });
                 const response = await is_member(private_key);
                 console.log(response);
+                
                 if (response) {
                     interaction.editReply("You Are DAO member");
                 } else {

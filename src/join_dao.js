@@ -4,8 +4,13 @@ import { AeSdk, MemoryAccount, Node, CompilerHttp, TransactionError, BaseError, 
 export async function join_dao(privatekey) {
 
 const node = new Node('https://testnet.aeternity.io') // ideally host your own node
-const account = new MemoryAccount(privatekey)
+try  {
+    const test = new MemoryAccount(privatekey)
+} catch (err) {
+    return "invalid private_key"
+}
 
+const account = new MemoryAccount(privatekey)
 const aeSdk = new AeSdk({
   nodes: [{ name: 'testnet', instance: node }],
   accounts: [account],
@@ -18,6 +23,7 @@ const contract = await aeSdk.initializeContract({ aci, address })
 
 try {
     const tx = await contract.joinDAO();
+    console.log(tx.decodedResult);
     console.log(tx.decodedResult);
     return "success";
     // Code to handle successful execution
